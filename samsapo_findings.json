@@ -110,7 +110,8 @@
         "threading": true
       },
       "ID": 1,
-      "description": "This malicious flow reads SMS address and sends it to a remote server via HTTP Post request. "
+      "description": "This malicious flow reads SMS address and sends it to a remote server via HTTP Post request. ",
+      "isNegative": false
     },
     {
       "source": {
@@ -165,7 +166,8 @@
         "threading": true
       },
       "ID": 2,
-      "description": "This malicious flow reads incoming SMSs and sends them to a remote server via HTTP request."
+      "description": "This malicious flow reads incoming SMSs and sends them to a remote server via HTTP request.",
+      "isNegative": false
     },
     {
       "source": {
@@ -230,7 +232,8 @@
         "reflection": true
       },
       "ID": 3,
-      "description": "This malicious flow uses reflection to terminate calls from user's contact. "
+      "description": "This malicious flow uses reflection to terminate calls from user's contact. ",
+      "isNegative": false
     },
     {
       "source": {
@@ -376,7 +379,43 @@
         "threading": true
       },
       "ID": 4,
-      "description": "This malicious flow sends incoming SMS message to a remote server via a HTTP POST."
+      "description": "This malicious flow sends incoming SMS message to a remote server via a HTTP POST.",
+      "isNegative": false
+    },
+    {
+      "source": {
+        "statement": "TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(\"phone\");",
+        "methodName": "private Object getTelephonyServiceObject(Context context)",
+        "className": "com.android.tools.system.PhoneReceiver",
+        "lineNo": 42,
+        "targetName": "getSystemService",
+        "targetNo": 1,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r2 = virtualinvoke $r1.<android.content.Context: java.lang.Object getSystemService(java.lang.String)>(\"phone\")"
+          }
+        ]
+      },
+      "sink": {
+        "statement": "return declaredMethod.invoke(telephonyManager, new Object[0]);",
+        "methodName": "private Object getTelephonyServiceObject(Context context)",
+        "className": "com.android.tools.system.PhoneReceiver",
+        "lineNo": 47,
+        "targetName": "invoke",
+        "targetNo": 1,
+        "IRs": [
+          {
+            "type": "Jimple",
+            "IRstatement": "$r2 = virtualinvoke $r7.<java.lang.reflect.Method: java.lang.Object invoke(java.lang.Object,java.lang.Object[])>($r3, $r8)"
+          }
+        ]
+      },
+      "intermediateFlows": [],
+      "attributes": {},
+      "ID": 5,
+      "description": "Negative flow.",
+      "isNegative": true
     }
   ]
 }
